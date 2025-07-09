@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BULLA Top Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-white text-black flex flex-col min-h-screen">
+  <!-- HEADER -->
+  <header class="flex justify-between items-center px-4 py-3 border-b border-gray-200">
+    <div class="flex items-center space-x-1">
+      <img src="https://storage.googleapis.com/a1aa/image/e43cc871-15f7-43d0-1119-e4651f82d314.jpg" alt="RanGvo logo" class="w-10 h-10" />
+      <span class="text-2xl font-extrabold text-[#ef2a44] select-none">RanGvo</span>
+    </div>
+    <nav id="nav-menu" class="hidden md:flex items-center space-x-6 text-gray-700 font-medium">
+      <a href="#profile" class="hover:text-[#ef2a44]">My Profile</a>
+      <a href="#orders" class="hover:text-[#ef2a44] relative">My Orders <span id="badge" class="absolute -top-2 -right-3 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center hidden">0</span></a>
+      <a href="#wallet" class="hover:text-[#ef2a44]">My Wallet</a>
+      <a href="#add-money" class="hover:text-[#ef2a44]">Add Money</a>
+    </nav>
+    <button id="mobile-menu-btn" class="md:hidden text-gray-700"><i class="fas fa-bars"></i></button>
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+      <a href="#profile" class="block px-4 py-2">My Profile</a>
+      <a href="#orders" class="block px-4 py-2">My Orders</a>
+      <a href="#wallet" class="block px-4 py-2">My Wallet</a>
+      <a href="#add-money" class="block px-4 py-2">Add Money</a>
+    </div>
+  </header>  <!-- LOGIN SECTION -->  <section class="text-center p-8">
+    <button onclick="googleLogin()" class="bg-[#ef2a44] text-white px-5 py-2 rounded-full font-semibold hover:bg-red-600 transition">Login with Google</button>
+    <div id="user-info" class="mt-4 text-gray-700 text-sm hidden"></div>
+  </section>  <!-- FOOTER -->  <footer class="bg-[#ef2a44] text-white pt-10 pb-6 px-6 mt-auto">
+    <div class="max-w-4xl mx-auto text-center text-sm">
+      © Copyright 2025 RanGvo. All Rights Reserved.
+    </div>
+  </footer>  <!-- Firebase SDKs -->  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBHD6jSy3ju5ImJ-bkhe2y_IwbLwvxCfTk",
+      authDomain: "bulla-top-up-a1181.firebaseapp.com",
+      projectId: "bulla-top-up-a1181",
+      storageBucket: "bulla-top-up-a1181.firebasestorage.app",
+      messagingSenderId: "663591421683",
+      appId: "1:663591421683:web:b046bea808ee57e1891986"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    let currentUser = null;
+    auth.onAuthStateChanged(user => {
+      currentUser = user;
+      const userInfo = document.getElementById("user-info");
+      if (user) {
+        userInfo.innerText = `✅ Logged in as ${user.email}`;
+        userInfo.classList.remove("hidden");
+      } else {
+        userInfo.innerText = "❌ Not logged in.";
+        userInfo.classList.remove("hidden");
+      }
+    });
+
+    function googleLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          alert("Login successful: " + result.user.email);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  </script></body>
+      </html>
